@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orders-api
+  namespace: demo-orders
+spec:
+  rules:
+    - host: orders.demo.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: orders-api
+                port:
+                  name: http
+
