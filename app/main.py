@@ -15,9 +15,16 @@ app = FastAPI(title="Orders API", version="1.0.0")
 static_directory = Path(__file__).parent / "static"
 
 
+def database_host() -> str:
+    host_file = os.getenv("DATABASE_HOST_FILE")
+    if host_file:
+        return Path(host_file).read_text(encoding="utf-8").strip()
+    return os.environ["DATABASE_HOST"]
+
+
 def database_connection() -> psycopg.Connection:
     return psycopg.connect(
-        host=os.environ["DATABASE_HOST"],
+        host=database_host(),
         port=int(os.getenv("DATABASE_PORT", "5432")),
         dbname=os.environ["DATABASE_NAME"],
         user=os.environ["DATABASE_USER"],

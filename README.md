@@ -63,8 +63,10 @@ change:
 bash scripts/reset-demo.sh
 ```
 
-This reapplies the manifests and restarts only `orders-api`; PostgreSQL sample
-data is retained. `/health` should return `200`, while `/orders` should return
+This reapplies the intentionally broken API configuration while PostgreSQL
+sample data is retained. The API reads this ConfigMap through a mounted volume,
+so the pod and its port-forward stay alive; the updated value reaches the pod
+automatically. `/health` should return `200`, while `/orders` should return
 `500` until the configuration issue is fixed again.
 
 For a complete reset, including database data, use:

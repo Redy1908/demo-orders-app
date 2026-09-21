@@ -14,10 +14,10 @@ if [[ "${1:-}" == "--full" ]]; then
 
   kubectl delete namespace "$namespace"
   kubectl wait --for=delete "namespace/$namespace" --timeout=180s
+  kubectl apply -k "$repo_root/k8s"
+  kubectl -n "$namespace" rollout status deployment/orders-api --timeout=180s
+else
+  kubectl apply -f "$repo_root/k8s/api-config.yaml"
 fi
 
-kubectl apply -k "$repo_root/k8s"
-kubectl -n "$namespace" rollout restart deployment/orders-api
-kubectl -n "$namespace" rollout status deployment/orders-api --timeout=180s
-
-echo "Demo reset complete. /health should return 200; /orders should return 500 until the intended configuration issue is fixed."
+echo "Demo reset complete. The ConfigMap volume updates without restarting orders-api. /health should return 200; /orders should return 500 once the updated configuration reaches the pod."
