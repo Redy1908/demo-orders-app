@@ -17,13 +17,13 @@ HTTP client -> Ingress -> orders-api -> PostgreSQL
 Build the API image where the Kubernetes node can access it:
 
 ```sh
-docker build -t demo-orders-api:1.0.0 .
+docker build -t demo-orders-api:1.0.1 .
 ```
 
 For a local k3s installation using containerd, import the image into k3s:
 
 ```sh
-docker save demo-orders-api:1.0.0 -o /tmp/demo-orders-api.tar
+docker save demo-orders-api:1.0.1 -o /tmp/demo-orders-api.tar
 sudo k3s ctr images import /tmp/demo-orders-api.tar
 ```
 
