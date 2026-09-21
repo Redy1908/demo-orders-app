@@ -40,6 +40,8 @@ Forward the API service for local verification:
 kubectl -n demo-orders port-forward svc/orders-api 18080:80
 ```
 
+Open the demo UI at [http://localhost:18080](http://localhost:18080).
+
 The process health endpoint should respond successfully:
 
 ```sh
@@ -51,3 +53,25 @@ Retrieve the sample orders:
 ```sh
 curl http://localhost:18080/orders
 ```
+
+## Reset the demo
+
+Restore the intended broken GitOps configuration after a demo or a live cluster
+change:
+
+```sh
+bash scripts/reset-demo.sh
+```
+
+This reapplies the manifests and restarts only `orders-api`; PostgreSQL sample
+data is retained. `/health` should return `200`, while `/orders` should return
+`500` until the configuration issue is fixed again.
+
+For a complete reset, including database data, use:
+
+```sh
+bash scripts/reset-demo.sh --full
+```
+
+The complete reset deletes and recreates the `demo-orders` namespace and asks
+for explicit confirmation.
