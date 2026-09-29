@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: demo-orders-api:1.0.1
+          image: demo-orders-api:1.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
